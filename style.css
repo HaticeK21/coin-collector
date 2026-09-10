@@ -1,0 +1,47 @@
+body {
+    margin: 0;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    background: #87ceeb;
+}
+
+#game {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+    background: #7ec850;
+}
+
+#score {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 10;
+    background: white;
+    padding: 12px 18px;
+    border-radius: 15px;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+#player {
+    position: absolute;
+    width: 45px;
+    height: 45px;
+    background: #3498db;
+    border-radius: 50%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.coin {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    background: gold;
+    border-radius: 50%;
+    border: 3px solid #d99b00;
+}
+
