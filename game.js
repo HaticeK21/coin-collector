@@ -4,32 +4,30 @@ const scoreText = document.getElementById("coins");
 let x = window.innerWidth / 2;
 let y = window.innerHeight / 2;
 let coins = 0;
-
 const speed = 5;
+
 const keys = {};
 const coinList = [];
 
-document.addEventListener("keydown", (event) => {
-    keys[event.key] = true;
+document.addEventListener("keydown", (e) => {
+    keys[e.key] = true;
 });
 
-document.addEventListener("keyup", (event) => {
-    keys[event.key] = false;
+document.addEventListener("keyup", (e) => {
+    keys[e.key] = false;
 });
 
 function createCoin() {
     const coin = document.createElement("div");
-
     coin.className = "coin";
 
     coin.style.left =
-        Math.random() * (window.innerWidth - 40) + "px";
+        Math.random() * (window.innerWidth - 50) + "px";
 
     coin.style.top =
-        Math.random() * (window.innerHeight - 40) + "px";
+        Math.random() * (window.innerHeight - 100) + "px";
 
     document.getElementById("game").appendChild(coin);
-
     coinList.push(coin);
 }
 
@@ -40,29 +38,63 @@ for (let i = 0; i < 10; i++) {
 function checkCoinCollision() {
     const playerRect = player.getBoundingClientRect();
 
-    coinList.forEach((coin, index) => {
+    for (let i = coinList.length - 1; i >= 0; i--) {
+        const coin = coinList[i];
         const coinRect = coin.getBoundingClientRect();
 
-        const collision =
+        if (
             playerRect.left < coinRect.right &&
             playerRect.right > coinRect.left &&
             playerRect.top < coinRect.bottom &&
-            playerRect.bottom > coinRect.top;
-
-        if (collision) {
+            playerRect.bottom > coinRect.top
+        ) {
             coin.remove();
-            coinList.splice(index, 1);
+            coinList.splice(i, 1);
 
             coins++;
             scoreText.textContent = coins;
 
-            setTimeout(createCoin, 1000);
+            setTimeout(createCoin, 700);
         }
+    }
+}
+
+function movePlayer(key) {
+    keys[key] = true;
+}
+
+function stopPlayer(key) {
+    keys[key] = false;
+}
+
+function setupButton(id, key) {
+    const button = document.getElementById(id);
+
+    button.addEventListener("pointerdown", (e) => {
+        e.preventDefault();
+        movePlayer(key);
+    });
+
+    button.addEventListener("pointerup", (e) => {
+        e.preventDefault();
+        stopPlayer(key);
+    });
+
+    button.addEventListener("pointercancel", () => {
+        stopPlayer(key);
+    });
+
+    button.addEventListener("pointerleave", () => {
+        stopPlayer(key);
     });
 }
 
-function gameLoop() {
+setupButton("up", "ArrowUp");
+setupButton("down", "ArrowDown");
+setupButton("left", "ArrowLeft");
+setupButton("right", "ArrowRight");
 
+function gameLoop() {
     if (keys["ArrowUp"] || keys["w"]) {
         y -= speed;
     }
@@ -89,26 +121,5 @@ function gameLoop() {
 
     requestAnimationFrame(gameLoop);
 }
-
-function holdButton(button, key) {
-
-    button.addEventListener("touchstart", (event) => {
-        event.preventDefault();
-        keys[key] = true;
-    });
-
-    button.addEventListener("touchend", () => {
-        keys[key] = false;
-    });
-
-    button.addEventListener("touchcancel", () => {
-        keys[key] = false;
-    });
-}
-
-holdButton(document.getElementById("up"), "ArrowUp");
-holdButton(document.getElementById("down"), "ArrowDown");
-holdButton(document.getElementById("left"), "ArrowLeft");
-holdButton(document.getElementById("right"), "ArrowRight");
 
 gameLoop();
