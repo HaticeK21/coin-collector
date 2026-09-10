@@ -30,24 +30,22 @@ body {
 #player {
     position: absolute;
     width: 55px;
-    height: 65px;
+    height: 70px;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
     z-index: 5;
 }
 
-/* Uzaylının kafası */
 .alien-head {
     position: absolute;
     width: 55px;
     height: 50px;
     background: #55c94a;
-    border-radius: 50% 50% 45% 45%;
+    border-radius: 50%;
     top: 0;
 }
 
-/* Gözler */
 .eye {
     position: absolute;
     width: 12px;
@@ -65,7 +63,6 @@ body {
     right: 13px;
 }
 
-/* Ağız */
 .mouth {
     position: absolute;
     width: 18px;
@@ -76,7 +73,6 @@ body {
     top: 34px;
 }
 
-/* Gövde */
 .alien-body {
     position: absolute;
     width: 38px;
@@ -87,7 +83,6 @@ body {
     top: 43px;
 }
 
-/* Antenler */
 .alien-head::before,
 .alien-head::after {
     content: "";
@@ -106,7 +101,6 @@ body {
 .alien-head::after {
     right: 12px;
     transform: rotate(25deg);
-}
 }
 
 .coin {
@@ -143,10 +137,4 @@ body {
 
 #controls button:active {
     transform: scale(0.9);
-}
-
-#controls div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
