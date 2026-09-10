@@ -190,5 +190,75 @@ html, body {
             <button id="right">▶</button>
         </div>
     </div>
+<script>
+const player = document.getElementById("player");
+const scoreText = document.getElementById("coins");
+const game = document.getElementById("game");
 
-</
+let x = 150;
+let y = 150;
+let coins = 0;
+const speed = 5;
+const keys = {};
+
+document.addEventListener("keydown", e => keys[e.key] = true);
+document.addEventListener("keyup", e => keys[e.key] = false);
+
+function createCoin() {
+    const coin = document.createElement("div");
+    coin.className = "coin";
+
+    coin.style.left = Math.random() * (window.innerWidth - 40) + "px";
+    coin.style.top = 80 + Math.random() * (window.innerHeight - 180) + "px";
+
+    game.appendChild(coin);
+}
+
+for (let i = 0; i < 10; i++) {
+    createCoin();
+}
+
+function setupButton(id, key) {
+    const button = document.getElementById(id);
+
+    button.addEventListener("pointerdown", e => {
+        e.preventDefault();
+        keys[key] = true;
+    });
+
+    button.addEventListener("pointerup", e => {
+        e.preventDefault();
+        keys[key] = false;
+    });
+
+    button.addEventListener("pointercancel", () => {
+        keys[key] = false;
+    });
+}
+
+setupButton("up", "ArrowUp");
+setupButton("down", "ArrowDown");
+setupButton("left", "ArrowLeft");
+setupButton("right", "ArrowRight");
+
+function gameLoop() {
+
+    if (keys["ArrowUp"]) y -= speed;
+    if (keys["ArrowDown"]) y += speed;
+    if (keys["ArrowLeft"]) x -= speed;
+    if (keys["ArrowRight"]) x += speed;
+
+    x = Math.max(0, Math.min(window.innerWidth - 60, x));
+    y = Math.max(0, Math.min(window.innerHeight - 80, y));
+
+    player.style.left = x + "px";
+    player.style.top = y + "px";
+
+    requestAnimationFrame(gameLoop);
+}
+
+gameLoop();
+</script>
+
+</body>
+</html>
