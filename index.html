@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coin Collector 🪙</title>
+</head>
+
+<body>
+    <h1>🪙 Coin Collector</h1>
+
+    <h2>Coin: <span id="coins">0</span></h2>
+
+    <button onclick="collectCoin()">COIN TOPLA</button>
+
+    <script>
+        let coins = 0;
+
+        function collectCoin() {
+            coins++;
+            document.getElementById("coins").textContent = coins;
+        }
+    </script>
+</body>
+</html>
