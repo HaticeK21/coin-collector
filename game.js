@@ -1,40 +1,45 @@
+const game = document.getElementById("game");
 const player = document.getElementById("player");
 const scoreText = document.getElementById("coins");
 
-let x = window.innerWidth / 2;
-let y = window.innerHeight / 2;
+let x = window.innerWidth / 2 - 30;
+let y = window.innerHeight / 2 - 35;
 let coins = 0;
-const speed = 5;
 
+const speed = 5;
 const keys = {};
 const coinList = [];
 
-document.addEventListener("keydown", (e) => {
-    keys[e.key] = true;
+// Klavye
+document.addEventListener("keydown", (event) => {
+    keys[event.key] = true;
 });
 
-document.addEventListener("keyup", (e) => {
-    keys[e.key] = false;
+document.addEventListener("keyup", (event) => {
+    keys[event.key] = false;
 });
 
+// Coin oluştur
 function createCoin() {
     const coin = document.createElement("div");
     coin.className = "coin";
 
-    coin.style.left =
-        Math.random() * (window.innerWidth - 50) + "px";
+    const maxX = Math.max(10, window.innerWidth - 45);
+    const maxY = Math.max(80, window.innerHeight - 150);
 
-    coin.style.top =
-        Math.random() * (window.innerHeight - 100) + "px";
+    coin.style.left = Math.random() * maxX + "px";
+    coin.style.top = 70 + Math.random() * (maxY - 70) + "px";
 
-    document.getElementById("game").appendChild(coin);
+    game.appendChild(coin);
     coinList.push(coin);
 }
 
+// Başlangıçta 10 coin
 for (let i = 0; i < 10; i++) {
     createCoin();
 }
 
+// Coin toplama
 function checkCoinCollision() {
     const playerRect = player.getBoundingClientRect();
 
@@ -59,33 +64,26 @@ function checkCoinCollision() {
     }
 }
 
-function movePlayer(key) {
-    keys[key] = true;
-}
-
-function stopPlayer(key) {
-    keys[key] = false;
-}
-
+// Telefon tuşları
 function setupButton(id, key) {
     const button = document.getElementById(id);
 
-    button.addEventListener("pointerdown", (e) => {
-        e.preventDefault();
-        movePlayer(key);
+    button.addEventListener("pointerdown", (event) => {
+        event.preventDefault();
+        keys[key] = true;
     });
 
-    button.addEventListener("pointerup", (e) => {
-        e.preventDefault();
-        stopPlayer(key);
+    button.addEventListener("pointerup", (event) => {
+        event.preventDefault();
+        keys[key] = false;
     });
 
     button.addEventListener("pointercancel", () => {
-        stopPlayer(key);
+        keys[key] = false;
     });
 
     button.addEventListener("pointerleave", () => {
-        stopPlayer(key);
+        keys[key] = false;
     });
 }
 
@@ -94,7 +92,9 @@ setupButton("down", "ArrowDown");
 setupButton("left", "ArrowLeft");
 setupButton("right", "ArrowRight");
 
+// Oyun döngüsü
 function gameLoop() {
+
     if (keys["ArrowUp"] || keys["w"]) {
         y -= speed;
     }
@@ -111,8 +111,11 @@ function gameLoop() {
         x += speed;
     }
 
-    x = Math.max(0, Math.min(window.innerWidth - 45, x));
-    y = Math.max(0, Math.min(window.innerHeight - 45, y));
+    const maxX = window.innerWidth - 60;
+    const maxY = window.innerHeight - 70;
+
+    x = Math.max(0, Math.min(maxX, x));
+    y = Math.max(0, Math.min(maxY, y));
 
     player.style.left = x + "px";
     player.style.top = y + "px";
