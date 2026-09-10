@@ -29,13 +29,84 @@ body {
 
 #player {
     position: absolute;
-    width: 45px;
-    height: 45px;
-    background: #3498db;
-    border-radius: 50%;
+    width: 55px;
+    height: 65px;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+    z-index: 5;
+}
+
+/* Uzaylının kafası */
+.alien-head {
+    position: absolute;
+    width: 55px;
+    height: 50px;
+    background: #55c94a;
+    border-radius: 50% 50% 45% 45%;
+    top: 0;
+}
+
+/* Gözler */
+.eye {
+    position: absolute;
+    width: 12px;
+    height: 17px;
+    background: #111;
+    border-radius: 50%;
+    top: 16px;
+}
+
+.left-eye {
+    left: 13px;
+}
+
+.right-eye {
+    right: 13px;
+}
+
+/* Ağız */
+.mouth {
+    position: absolute;
+    width: 18px;
+    height: 8px;
+    border-bottom: 3px solid #111;
+    border-radius: 50%;
+    left: 19px;
+    top: 34px;
+}
+
+/* Gövde */
+.alien-body {
+    position: absolute;
+    width: 38px;
+    height: 25px;
+    background: #55c94a;
+    border-radius: 45%;
+    left: 8px;
+    top: 43px;
+}
+
+/* Antenler */
+.alien-head::before,
+.alien-head::after {
+    content: "";
+    position: absolute;
+    width: 3px;
+    height: 12px;
+    background: #55c94a;
+    top: -9px;
+}
+
+.alien-head::before {
+    left: 12px;
+    transform: rotate(-25deg);
+}
+
+.alien-head::after {
+    right: 12px;
+    transform: rotate(25deg);
+}
 }
 
 .coin {
