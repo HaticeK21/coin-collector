@@ -45,3 +45,26 @@ body {
     border: 3px solid #d99b00;
 }
 
+#controls {
+    position: absolute;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    z-index: 20;
+}
+
+#controls button {
+    width: 60px;
+    height: 60px;
+    margin: 4px;
+    border: none;
+    border-radius: 15px;
+    font-size: 25px;
+    font-weight: bold;
+    touch-action: none;
+}
+
+#controls button:active {
+    transform: scale(0.9);
+}

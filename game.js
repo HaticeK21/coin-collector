@@ -7,7 +7,6 @@ let coins = 0;
 
 const speed = 5;
 const keys = {};
-
 const coinList = [];
 
 document.addEventListener("keydown", (event) => {
@@ -64,10 +63,21 @@ function checkCoinCollision() {
 
 function gameLoop() {
 
-    if (keys["ArrowUp"] || keys["w"]) y -= speed;
-    if (keys["ArrowDown"] || keys["s"]) y += speed;
-    if (keys["ArrowLeft"] || keys["a"]) x -= speed;
-    if (keys["ArrowRight"] || keys["d"]) x += speed;
+    if (keys["ArrowUp"] || keys["w"]) {
+        y -= speed;
+    }
+
+    if (keys["ArrowDown"] || keys["s"]) {
+        y += speed;
+    }
+
+    if (keys["ArrowLeft"] || keys["a"]) {
+        x -= speed;
+    }
+
+    if (keys["ArrowRight"] || keys["d"]) {
+        x += speed;
+    }
 
     x = Math.max(0, Math.min(window.innerWidth - 45, x));
     y = Math.max(0, Math.min(window.innerHeight - 45, y));
@@ -79,5 +89,26 @@ function gameLoop() {
 
     requestAnimationFrame(gameLoop);
 }
+
+function holdButton(button, key) {
+
+    button.addEventListener("touchstart", (event) => {
+        event.preventDefault();
+        keys[key] = true;
+    });
+
+    button.addEventListener("touchend", () => {
+        keys[key] = false;
+    });
+
+    button.addEventListener("touchcancel", () => {
+        keys[key] = false;
+    });
+}
+
+holdButton(document.getElementById("up"), "ArrowUp");
+holdButton(document.getElementById("down"), "ArrowDown");
+holdButton(document.getElementById("left"), "ArrowLeft");
+holdButton(document.getElementById("right"), "ArrowRight");
 
 gameLoop();
