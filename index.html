@@ -107,15 +107,7 @@ button {
 </div>
 
 <div id="game">
-
     <div id="player">👽</div>
-
-    <div class="coin" data-x="120" data-y="80"></div>
-    <div class="coin" data-x="300" data-y="100"></div>
-    <div class="coin" data-x="480" data-y="180"></div>
-    <div class="coin" data-x="180" data-y="280"></div>
-    <div class="coin" data-x="400" data-y="360"></div>
-
 </div>
 
 <div id="controls">
@@ -141,25 +133,41 @@ const playerSize = 40;
 const coinSize = 28;
 
 
-// PARALARIN BAŞLANGIÇ KONUMU
-document.querySelectorAll(".coin").forEach(function(coin) {
+// YENİ PARA OLUŞTUR
+function createCoin() {
 
-    const x = Number(coin.dataset.x);
-    const y = Number(coin.dataset.y);
+    const coin = document.createElement("div");
 
-    coin.style.left = x + "px";
-    coin.style.top = y + "px";
+    coin.className = "coin";
 
-});
+    const maxX = game.clientWidth - coinSize;
+    const maxY = game.clientHeight - coinSize;
+
+    let coinX;
+    let coinY;
+
+    // Oyuncunun hemen altında oluşmaması için
+    do {
+        coinX = Math.floor(Math.random() * maxX);
+        coinY = Math.floor(Math.random() * maxY);
+    } while (
+        Math.abs(coinX - playerX) < 70 &&
+        Math.abs(coinY - playerY) < 70
+    );
+
+    coin.dataset.x = coinX;
+    coin.dataset.y = coinY;
+
+    coin.style.left = coinX + "px";
+    coin.style.top = coinY + "px";
+
+    game.appendChild(coin);
+}
 
 
-// OYUNCUYU GÜNCELLE
-function updatePlayer() {
-
-    player.style.left = playerX + "px";
-    player.style.top = playerY + "px";
-
-    checkCoins();
+// BAŞLANGIÇTA 5 PARA
+for (let i = 0; i < 5; i++) {
+    createCoin();
 }
 
 
@@ -193,10 +201,20 @@ function checkCoins() {
 
             scoreText.textContent = score;
 
+            // TOPLANAN PARANIN YERİNE YENİ PARA
+            createCoin();
         }
-
     });
+}
 
+
+// OYUNCUYU GÜNCELLE
+function updatePlayer() {
+
+    player.style.left = playerX + "px";
+    player.style.top = playerY + "px";
+
+    checkCoins();
 }
 
 
@@ -252,6 +270,7 @@ document.addEventListener("keydown", function(event) {
 
 
 // TELEFON BUTONLARI
+
 document.getElementById("up").addEventListener("click", function() {
     move(0, -speed);
 });
