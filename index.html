@@ -1,261 +1,177 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coin Collector</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coin Collector</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+<style>
+* {
+    box-sizing: border-box;
+}
 
-        body {
-            margin: 0;
-            background: #111;
-            color: white;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            overflow: hidden;
-        }
+body {
+    margin: 0;
+    background: #111;
+    color: white;
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
 
-        h1 {
-            margin: 15px 0 5px;
-            font-size: 28px;
-        }
+h1 {
+    margin: 15px 0 5px;
+}
 
-        #score {
-            font-size: 20px;
-            margin-bottom: 10px;
-        }
+#score {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
 
-        #game {
-            position: relative;
-            width: 90vw;
-            max-width: 700px;
-            height: 65vh;
-            max-height: 500px;
-            min-height: 350px;
-            margin: auto;
-            background: #182238;
-            border: 3px solid white;
-            overflow: hidden;
-        }
+#game {
+    position: relative;
+    width: 90vw;
+    max-width: 600px;
+    height: 70vh;
+    max-height: 500px;
+    margin: auto;
+    background: #222;
+    border: 3px solid white;
+    overflow: hidden;
+}
 
-        #player {
-            position: absolute;
-            width: 40px;
-            height: 40px;
-            font-size: 34px;
-            line-height: 40px;
-            left: 50px;
-            top: 50px;
-            user-select: none;
-        }
+#player {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    font-size: 30px;
+    line-height: 40px;
+    text-align: center;
+    left: 20px;
+    top: 20px;
+}
 
-        .coin {
-            position: absolute;
-            width: 30px;
-            height: 30px;
-            font-size: 27px;
-            line-height: 30px;
-            user-select: none;
-        }
+.coin {
+    position: absolute;
+    width: 28px;
+    height: 28px;
+    background: gold;
+    border: 3px solid orange;
+    border-radius: 50%;
+}
 
-        #message {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(0, 0, 0, 0.9);
-            padding: 25px;
-            border-radius: 15px;
-            font-size: 24px;
-            display: none;
-            z-index: 10;
-        }
+#controls {
+    margin: 15px auto;
+    display: grid;
+    grid-template-columns: 60px 60px 60px;
+    gap: 5px;
+    justify-content: center;
+}
 
-        #restart {
-            margin-top: 10px;
-            padding: 10px 20px;
-            font-size: 17px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-        }
+button {
+    width: 60px;
+    height: 60px;
+    font-size: 25px;
+    background: #333;
+    color: white;
+    border: 2px solid #555;
+    border-radius: 10px;
+}
 
-        #controls {
-            margin: 15px auto;
-            width: 180px;
-            display: grid;
-            grid-template-columns: 60px 60px 60px;
-            grid-template-rows: 55px 55px;
-            gap: 5px;
-            justify-content: center;
-        }
+#up {
+    grid-column: 2;
+}
 
-        .control {
-            font-size: 25px;
-            border: none;
-            border-radius: 10px;
-            background: #333;
-            color: white;
-            touch-action: manipulation;
-        }
+#left {
+    grid-column: 1;
+    grid-row: 2;
+}
 
-        .control:active {
-            background: #555;
-        }
+#down {
+    grid-column: 2;
+    grid-row: 2;
+}
 
-        #up {
-            grid-column: 2;
-        }
-
-        #left {
-            grid-column: 1;
-            grid-row: 2;
-        }
-
-        #down {
-            grid-column: 2;
-            grid-row: 2;
-        }
-
-        #right {
-            grid-column: 3;
-            grid-row: 2;
-        }
-    </style>
+#right {
+    grid-column: 3;
+    grid-row: 2;
+}
+</style>
 </head>
 
 <body>
 
-    <h1>👽 Coin Collector</h1>
+<h1>🪙 Coin Collector 👽</h1>
 
-    <div id="score">
-        Skor: <span id="scoreValue">0</span> / 10
-    </div>
+<div id="score">
+    Skor: <span id="scoreValue">0</span>
+</div>
 
-    <div id="game">
+<div id="game">
 
-        <div id="player">👽</div>
+    <div id="player">👽</div>
 
-        <div id="message">
-            🎉 Kazandın!
-            <br>
-            <button id="restart">Tekrar Oyna</button>
-        </div>
+    <div class="coin" data-x="120" data-y="80"></div>
+    <div class="coin" data-x="300" data-y="100"></div>
+    <div class="coin" data-x="480" data-y="180"></div>
+    <div class="coin" data-x="180" data-y="280"></div>
+    <div class="coin" data-x="400" data-y="360"></div>
 
-    </div>
+</div>
 
-    <div id="controls">
-        <button class="control" id="up">⬆️</button>
-        <button class="control" id="left">⬅️</button>
-        <button class="control" id="down">⬇️</button>
-        <button class="control" id="right">➡️</button>
-    </div>
-
+<div id="controls">
+    <button id="up">▲</button>
+    <button id="left">◀</button>
+    <button id="down">▼</button>
+    <button id="right">▶</button>
+</div>
 
 <script>
 
-const game = document.getElementById("game");
 const player = document.getElementById("player");
-const scoreValue = document.getElementById("scoreValue");
-const message = document.getElementById("message");
-const restartButton = document.getElementById("restart");
+const game = document.getElementById("game");
+const scoreText = document.getElementById("scoreValue");
 
-const gameWidth = game.clientWidth;
-const gameHeight = game.clientHeight;
-
-const playerSize = 40;
-const coinSize = 30;
-
-const speed = 5;
-
-let playerX = 50;
-let playerY = 50;
+let playerX = 20;
+let playerY = 20;
 
 let score = 0;
 
-let coins = [];
+const speed = 10;
+const playerSize = 40;
+const coinSize = 28;
 
 
-// -------------------------
-// PARA OLUŞTURMA
-// -------------------------
+// PARALARIN BAŞLANGIÇ KONUMU
+document.querySelectorAll(".coin").forEach(function(coin) {
 
-function createCoins() {
+    const x = Number(coin.dataset.x);
+    const y = Number(coin.dataset.y);
 
-    coins.forEach(coin => coin.remove());
+    coin.style.left = x + "px";
+    coin.style.top = y + "px";
 
-    coins = [];
-
-    score = 0;
-    scoreValue.textContent = score;
-
-    for (let i = 0; i < 10; i++) {
-
-        const coin = document.createElement("div");
-
-        coin.className = "coin";
-        coin.textContent = "🪙";
-
-        let x;
-        let y;
-
-        let safePosition = false;
-
-        while (!safePosition) {
-
-            x = Math.random() * (game.clientWidth - coinSize);
-            y = Math.random() * (game.clientHeight - coinSize);
-
-            const distance =
-                Math.sqrt(
-                    Math.pow(x - playerX, 2) +
-                    Math.pow(y - playerY, 2)
-                );
-
-            if (distance > 80) {
-                safePosition = true;
-            }
-        }
-
-        coin.style.left = x + "px";
-        coin.style.top = y + "px";
-
-        game.appendChild(coin);
-
-        coins.push(coin);
-    }
-}
+});
 
 
-// -------------------------
-// OYUNCU KONUMU
-// -------------------------
-
+// OYUNCUYU GÜNCELLE
 function updatePlayer() {
 
     player.style.left = playerX + "px";
     player.style.top = playerY + "px";
+
+    checkCoins();
 }
 
 
-// -------------------------
-// ÇARPIŞMA KONTROLÜ
-// -------------------------
+// PARA TOPLAMA
+function checkCoins() {
 
-function checkCoinCollision() {
+    const coins = document.querySelectorAll(".coin");
 
-    coins.forEach((coin, index) => {
+    coins.forEach(function(coin) {
 
-        if (!coin) {
-            return;
-        }
-
-        const coinX = parseFloat(coin.style.left);
-        const coinY = parseFloat(coin.style.top);
+        const coinX = Number(coin.dataset.x);
+        const coinY = Number(coin.dataset.y);
 
         const playerRight = playerX + playerSize;
         const playerBottom = playerY + playerSize;
@@ -263,57 +179,35 @@ function checkCoinCollision() {
         const coinRight = coinX + coinSize;
         const coinBottom = coinY + coinSize;
 
-
         const collision =
             playerX < coinRight &&
             playerRight > coinX &&
             playerY < coinBottom &&
             playerBottom > coinY;
 
-
         if (collision) {
 
             coin.remove();
 
-            coins[index] = null;
-
             score++;
 
-            scoreValue.textContent = score;
+            scoreText.textContent = score;
 
-            if (score === 10) {
-
-                message.style.display = "block";
-            }
         }
+
     });
+
 }
 
 
-// -------------------------
 // HAREKET
-// -------------------------
+function move(x, y) {
 
-function movePlayer(direction) {
+    playerX += x;
+    playerY += y;
 
-    if (direction === "up") {
-        playerY -= speed;
-    }
-
-    if (direction === "down") {
-        playerY += speed;
-    }
-
-    if (direction === "left") {
-        playerX -= speed;
-    }
-
-    if (direction === "right") {
-        playerX += speed;
-    }
-
-
-    // Duvarlardan çıkmayı engelle
+    const maxX = game.clientWidth - playerSize;
+    const maxY = game.clientHeight - playerSize;
 
     if (playerX < 0) {
         playerX = 0;
@@ -323,116 +217,62 @@ function movePlayer(direction) {
         playerY = 0;
     }
 
-    if (playerX > game.clientWidth - playerSize) {
-        playerX = game.clientWidth - playerSize;
+    if (playerX > maxX) {
+        playerX = maxX;
     }
 
-    if (playerY > game.clientHeight - playerSize) {
-        playerY = game.clientHeight - playerSize;
+    if (playerY > maxY) {
+        playerY = maxY;
     }
-
 
     updatePlayer();
-
-    checkCoinCollision();
 }
 
 
-// -------------------------
-// KLAVYE KONTROLLERİ
-// -------------------------
-
+// KLAVYE
 document.addEventListener("keydown", function(event) {
 
-    if (
-        event.key === "ArrowUp" ||
-        event.key.toLowerCase() === "w"
-    ) {
-        movePlayer("up");
+    if (event.key === "ArrowUp") {
+        move(0, -speed);
     }
 
-    if (
-        event.key === "ArrowDown" ||
-        event.key.toLowerCase() === "s"
-    ) {
-        movePlayer("down");
+    if (event.key === "ArrowDown") {
+        move(0, speed);
     }
 
-    if (
-        event.key === "ArrowLeft" ||
-        event.key.toLowerCase() === "a"
-    ) {
-        movePlayer("left");
+    if (event.key === "ArrowLeft") {
+        move(-speed, 0);
     }
 
-    if (
-        event.key === "ArrowRight" ||
-        event.key.toLowerCase() === "d"
-    ) {
-        movePlayer("right");
+    if (event.key === "ArrowRight") {
+        move(speed, 0);
     }
 
 });
 
 
-// -------------------------
-// TELEFON KONTROLLERİ
-// -------------------------
+// TELEFON BUTONLARI
+document.getElementById("up").addEventListener("click", function() {
+    move(0, -speed);
+});
 
-document.getElementById("up").addEventListener(
-    "touchstart",
-    function(event) {
-        event.preventDefault();
-        movePlayer("up");
-    }
-);
+document.getElementById("down").addEventListener("click", function() {
+    move(0, speed);
+});
 
-document.getElementById("down").addEventListener(
-    "touchstart",
-    function(event) {
-        event.preventDefault();
-        movePlayer("down");
-    }
-);
+document.getElementById("left").addEventListener("click", function() {
+    move(-speed, 0);
+});
 
-document.getElementById("left").addEventListener(
-    "touchstart",
-    function(event) {
-        event.preventDefault();
-        movePlayer("left");
-    }
-);
-
-document.getElementById("right").addEventListener(
-    "touchstart",
-    function(event) {
-        event.preventDefault();
-        movePlayer("right");
-    }
-);
+document.getElementById("right").addEventListener("click", function() {
+    move(speed, 0);
+});
 
 
-// Fare ile de çalışsın
+// BAŞLANGIÇ
+updatePlayer();
 
-document.getElementById("up").addEventListener(
-    "click",
-    function() {
-        movePlayer("up");
-    }
-);
+</script>
 
-document.getElementById("down").addEventListener(
-    "click",
-    function() {
-        movePlayer("down");
-    }
-);
-
-document.getElementById("left").addEventListener(
-    "click",
-    function() {
-        movePlayer("left");
-    }
-);
-
-document.getElementBy
+</body>
+</html>
